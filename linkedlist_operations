@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+struct node
+{
+    int data;
+    struct node *next;
+};
+struct node *head=NULL;//pointing head to null
+void append(int n)
+{
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node));//creating temp node
+    temp->data=n;
+    temp->next=NULL;
+    if(head==NULL)// for 1st element to insert
+    head=temp;// making head to point 1st node
+    else// from 2nd to n elements to append
+    {
+        struct node *t;
+        t=head;//making t to point 1st node
+        while(t->next!=NULL)//travesing till last node
+        t=t->next;
+        t->next=temp;//making connection between last node and newly created node
+    }
+}
+void insert(int n,int p)
+{
+    struct node *temp,*r;
+    temp=(struct node*)malloc(sizeof(struct node));//creating temp node
+    temp->data=n;
+    temp->next=NULL;
+    r=head;//pointing r to head
+    for(int i=0;i<p-2;i++)//travesing to position-2 to insert
+    r=r->next;
+    temp->next=r->next;//making connection between r node and prev node which is present in temp
+    r->next=temp;//making connection between insertion node and next node
+}
+void insertatbeg(int n)
+{
+    struct node *temp,*r;
+    temp=(struct node*)malloc(sizeof(struct node));
+    temp->data=n;
+    temp->next=NULL;
+    if(head==NULL)// for 1st element to insert
+    {
+        head=temp;// making head to point 1st node
+        return;
+    }
+    else//if there is already a node
+    {
+        temp->next=head;//pointing  temp to first node
+        head=temp;//making temp as first node
+    }
+}
+void delete(int p)
+{
+    struct node *temp,*r;
+    temp=r=head;
+    if(p==1)//if delete position is 1
+    {
+        head=temp->next;//pointing head to temp->next
+        free(temp);//removing temp;
+    }
+    else//for delelte postion not equal to 1
+    {
+        for(int i=0;i<p-2;i++)//travesing to position-2 to delelte
+        temp=temp->next;
+        r=temp->next;//pointing exactly which element to delete
+        temp->next=r->next;//copying address of delete->next to temp to make connection
+        free(r);//removing r
+        
+    }
+    
+}
+void display()
+{
+    struct node *t;
+    t=head;
+    while(t!=NULL)
+    {
+        printf("%d\n",t->data);
+        t=t->next;
+    }
+}
+
+int main()
+{
+    int c,n,pos,o;
+    do
+    {
+        
+        printf("enter your choice\n");
+        printf("1.append\n2.insert at random\n3.insert at beg\n4.delete\n5.display\n");
+        scanf("%d",&c);
+        switch(c)
+        {
+            case 1:printf("enter element");
+                   scanf("%d",&n);
+                   append(n);
+                   break;
+                   
+            case 2:printf("enter element and position");
+                   scanf("%d %d",&n,&pos);
+                   insert(n,pos);
+                   break;
+            case 3:printf("enter element");
+                   scanf("%d",&n);
+                   insertatbeg(n);
+                   break;
+            case 4:printf("enter delete position");
+                   scanf("%d",&pos);
+                   delete(pos);
+                   break;
+            case 5:display();
+                   break;
+            default:printf("enter valid choice");
+            
+        }
+        printf("press 1 to continue");
+        scanf("%d",&o);
+        
+    }while(o==1);
+
+    return 0;
+}

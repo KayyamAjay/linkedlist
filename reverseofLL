@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node* next;
+}; 
+struct node* head=NULL;//pointing head to null
+void append(int data)
+{
+    struct node *temp,*r;
+    if(head==NULL) // for 1st element to insert
+    {
+        temp=(struct node*)malloc(sizeof(struct node));//creating temp node
+        temp->data=data;
+        temp->next=NULL;
+        head=temp; // making head to point 1st node
+    }
+    else// from 2nd to n elements to append
+    {
+        r=(struct node*)malloc(sizeof(struct node));//creating r node;
+        r->data=data;
+        r->next=NULL;
+        temp=head;//making temp to point 1st node
+        while(temp->next!=NULL)//travesing till last node
+        temp=temp->next;
+        temp->next=r;//making connection between last node and newly created node
+        
+    }
+}
+void reverse()
+{
+    struct node *temp,*prev,*c;
+    prev=NULL;
+    temp=head;
+    while(temp!=NULL)//travesing and changing link for each node to prev so as to reverse
+    {
+        c=temp->next;//used c to have address of temp->next;
+        temp->next=prev;//making temp->next to point prev
+        prev=temp;//shifting prev to right
+        temp=c;//shifting temp to right
+        
+    }
+    head=prev;//making head to point last node
+}
+void display()
+{
+    struct node *t;
+    t=head;
+    while(t!=NULL)
+    {
+        printf("%d ",t->data);
+        t=t->next;
+    }
+}
+int main()
+{
+    
+    int n,i,x;
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&x);
+        append(x);
+    }
+    display();
+    reverse();
+    printf("\n");
+    display();
+
+    return 0;
+}

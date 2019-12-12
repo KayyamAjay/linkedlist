@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *next;
+};
+struct node *head=NULL;
+void append(int n)
+{
+    struct node *temp,*r;
+    temp=(struct node*)malloc(sizeof(struct node));
+    temp->data=n;
+    temp->next=NULL;
+    if(head==NULL)
+    head=temp;
+    else
+    {
+        r=head;
+        while(r->next!=NULL)
+        r=r->next;
+        r->next=temp;
+    }
+    return;
+}
+void sort()
+{
+    
+    struct node *temp,*r;
+    int n;
+    temp=r=head;//pointing temp and r to head
+    temp=temp->next;//moving temp to right
+    while(r->next!=NULL)//looping till last
+    {   while(temp!=NULL){//looping till last to compare with r
+        if(temp->data<r->data)//swaping
+        {
+            n=temp->data;
+            temp->data=r->data;
+            r->data=n;
+            
+        }
+        temp=temp->next;//traversing to temp right
+    }
+    r=r->next;//traversing to next position
+    temp=r->next;//traversing to next position
+    }
+    
+}
+void dis()
+{
+    struct node *temp=head;
+    while(temp!=NULL)
+    {
+        printf("%d\n",temp->data);
+        temp=temp->next;
+    }
+    return;
+}
+int main()
+{
+    int n,i,m;
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&m);
+        append(m);
+    }
+    sort();
+    dis();
+
+    return 0;
+}

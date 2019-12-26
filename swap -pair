@@ -1,0 +1,80 @@
+INPUT 1 2 3 4 5 6
+OUTPUT 2 1 4 3 6 5
+INPUT 1 2 3 4 5
+OUTPUT 2 1 4 3 5
+CODE:
+#include <stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node* next;
+}; 
+struct node* head=NULL;//pointing head to null
+void append(int data)
+{
+    struct node *temp,*r;
+    if(head==NULL) // for 1st element to insert
+    {
+        temp=(struct node*)malloc(sizeof(struct node));//creating temp node
+        temp->data=data;
+        temp->next=NULL;
+        head=temp; // making head to point 1st node
+    }
+    else// from 2nd to n elements to append
+    {
+        r=(struct node*)malloc(sizeof(struct node));//creating r node;
+        r->data=data;
+        r->next=NULL;
+        temp=head;//making temp to point 1st node
+        while(temp->next!=NULL)//travesing till last node
+        temp=temp->next;
+        temp->next=r;//making connection between last node and newly created node
+        
+    }
+}
+void swap()
+{
+    struct node *temp,*r;
+    int n;
+    temp=head;
+    r=head;
+    if(temp->next==NULL)//if only one node exist
+    return;
+    while(temp!=NULL && temp->next!=NULL)
+    {
+        r=temp->next;//swap logic
+        n=temp->data;
+        temp->data=r->data;
+        r->data=n;
+        temp=temp->next->next;//moving temp twice to next node
+    }
+}
+void display()
+{
+    struct node *temp;
+    temp=head;
+    while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+    printf("\n");
+}
+
+int main()
+{
+    
+    int n,i,x;
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&x);
+        append(x);
+    }
+    display();
+    swap();
+    display();
+
+    return 0;
+}
